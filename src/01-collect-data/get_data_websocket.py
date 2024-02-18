@@ -92,7 +92,7 @@ file_names = ["btc-usd.txt"]
 # for product, file_name in zip(products, file_names):
 #     files[product] = open(file_name, "wb")
 
-file = open("messages.txt", "wb")
+file = open("messages-test.txt", "wb")
 
 def on_open(ws):
     print("Websocket opened")
