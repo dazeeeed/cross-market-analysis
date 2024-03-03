@@ -6,15 +6,13 @@ from sklearn.decomposition import PCA
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
-# Define the path to your Parquet file
 data_path = utilities.get_data_path(tree_level=2)
 filename = os.path.join(data_path, "datasets", "btc_stats.parquet")
 
-# Read the data from parquet file
+# TODO: REMOVE LIMIT LATER!
 df = pd.read_parquet(filename)[:1000]
 
 # # Choose features for analysis
-# features = ['feature1', 'feature2', ...]
 features = list(df.columns)
 
 # Standardize features before applying PCA

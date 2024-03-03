@@ -5,9 +5,8 @@ import threading
 
 # Define the products and the file names
 products = ["BTC-USD", "ETH-USD"]
-file_names = ["btc-usd.txt"]
 
-file = open("messages-test.txt", "wb")
+file = open("messages.txt", "wb")
 
 def on_open(ws):
     print("Websocket opened")

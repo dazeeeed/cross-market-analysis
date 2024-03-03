@@ -30,10 +30,11 @@ def separate_products(input_file, btc_output_file, eth_output_file):
 				pass # Handle invalid JSON lines (optional)
 
 def main():
+	basefile = "messages"
 	data_path = utilities.get_data_path(tree_level=2)
-	messages = os.path.join(data_path, "messages-test.txt")
-	btc_output_file = os.path.join(data_path, "messages-test-btc.txt")
-	eth_output_file = os.path.join(data_path, "messages-test-eth.txt")
+	messages = os.path.join(data_path, f"{basefile}.txt")
+	btc_output_file = os.path.join(data_path, f"{basefile}-btc.txt")
+	eth_output_file = os.path.join(data_path, f"{basefile}-eth.txt")
 
 	separate_products(messages, btc_output_file, eth_output_file)
 	print("Lines separated successfully!")

@@ -116,6 +116,7 @@ with open(filename) as file:
 	
 		stats = update_stats(ob, stats)
 
+		# TODO: REMOVE THIS LATER!
 		if i == 1000:
 			break
 
