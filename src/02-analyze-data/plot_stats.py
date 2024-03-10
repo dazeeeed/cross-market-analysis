@@ -5,16 +5,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+### PARAMETERS
+product = "eth"
+###
+
 data_path = utilities.get_data_path(tree_level=2)
-filename = os.path.join(data_path, "datasets", "btc_stats.parquet")
+filename = os.path.join(data_path, "datasets", f"{product}_stats.parquet")
 
 # TODO: REMOVE LIMIT LATER!
 df = pd.read_parquet(filename)[:1000]
 
+# print(df.info())
+
 # df = df.filter(like="_min", axis=1)
-plt.plot(df["spread_min"])
+# plt.plot(df["spread_min"])
 # plt.plot(df[["ask_price_min", "bid_price_max"]])
-plt.show()
+# plt.show()
 
 # correlation_matrix = df.corr()
 

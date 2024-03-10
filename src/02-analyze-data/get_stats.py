@@ -5,8 +5,12 @@ import json
 import pandas as pd
 from tqdm import tqdm
 
+### PARAMETERS
+product = "eth"
+###
+
 data_path = utilities.get_data_path(tree_level=2)
-filename = os.path.join(data_path, "messages-btc.txt")
+filename = os.path.join(data_path, f"messages-{product}.txt")
 
 class Orderbook:
 	def __init__(self):
@@ -170,6 +174,7 @@ df_stats['spread_btwn_vol_medians'] = df_stats['ask_vol_price_median'] - df_stat
 df_combined = pd.concat([df_times, df_stats], axis=1)
 
 # Save to parquet
-df_times.to_parquet(os.path.join(data_path, 'datasets', 'btc_times.parquet'))
-df_stats.to_parquet(os.path.join(data_path, 'datasets', 'btc_stats.parquet'))
-df_combined.to_parquet(os.path.join(data_path, 'datasets', 'btc_combined.parquet'))
+# df_times.to_parquet(os.path.join(data_path, 'datasets', 'btc_times.parquet'))
+# df_stats.to_parquet(os.path.join(data_path, 'datasets', 'btc_stats.parquet'))
+df_combined.to_parquet(os.path.join(data_path, 'datasets', f'{product}_stats.parquet'))
+df_combined.to_csv(os.path.join(data_path, "datasets", f"{product}_stats.csv"), index=False)
