@@ -7,14 +7,11 @@ import numpy as np
 import pandas as pd
 
 data_path = utilities.get_data_path(tree_level=2)
-basename = "messages"
-# basename_btc = f"{basename}-btc"
-# basename_eth = f"{basename}-eth"
-basename_btc = f"test1"
-basename_eth = f"test2"
+basename_btc = f"btc"
+basename_eth = f"eth"
 
-filename_btc = os.path.join(data_path, "datasets", f"{basename_btc}.csv")
-filename_eth = os.path.join(data_path, "datasets", f"{basename_eth}.csv")
+filename_btc = os.path.join(data_path, "datasets", f"{basename_btc}_stats.csv")
+filename_eth = os.path.join(data_path, "datasets", f"{basename_eth}_stats.csv")
 
 def convert_times(filename):
 	df = pd.read_csv(filename)
@@ -32,6 +29,7 @@ if min_time_eth < min_time_btc:
 elif min_time_eth > min_time_btc:
 	min_time_product = "BTC"
 else:
+	# Not gonna happen but stil...
 	min_time_product = "BTC+ETH SAME TIME"
 
 with open(os.path.join(data_path, "master_date.txt"), 'w') as md_f:
@@ -45,5 +43,5 @@ def convert_datetimes_to_floats(df, min_datetime):
 df_btc = convert_datetimes_to_floats(df_btc, min_time)
 df_eth = convert_datetimes_to_floats(df_eth, min_time)
 
-df_btc.to_csv(os.path.join(data_path, "datasets", f"{basename_btc}-times.csv"), index=False)
-df_eth.to_csv(os.path.join(data_path, "datasets", f"{basename_eth}-times.csv"), index=False)
+df_btc.to_csv(os.path.join(data_path, "datasets", f"{basename_btc}_times_transformed.csv"), index=False)
+df_eth.to_csv(os.path.join(data_path, "datasets", f"{basename_eth}_times_transformed.csv"), index=False)

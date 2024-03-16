@@ -4,23 +4,35 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.preprocessing import MinMaxScaler
 
 ### PARAMETERS
-product = "eth"
+products = ["btc", "eth"]
+col_to_plot = "ask_price_min"
 ###
 
 data_path = utilities.get_data_path(tree_level=2)
-filename = os.path.join(data_path, "datasets", f"{product}_stats.parquet")
+filenames = {}
+dataframes = {}
+scalers = {}
 
-# TODO: REMOVE LIMIT LATER!
-df = pd.read_parquet(filename)[:1000]
+fig, ax = plt.subplots()
 
-# print(df.info())
+for product in products:
+    filenames[product] = os.path.join(data_path, "datasets", f"{product}_stats_aligned.csv")
+    dataframes[product] = pd.read_csv(filenames[product], index_col=0)
 
-# df = df.filter(like="_min", axis=1)
-# plt.plot(df["spread_min"])
-# plt.plot(df[["ask_price_min", "bid_price_max"]])
-# plt.show()
+    # Normalize
+    scalers[product] = MinMaxScaler()
+    dataframes[product] = pd.DataFrame(scalers[product].fit_transform(dataframes[product]),
+                                       columns=dataframes[product].columns,
+                                       index=dataframes[product].index)
+    
+    time = dataframes[product].index
+    ax.plot(time, dataframes[product][col_to_plot])
+
+plt.show()
+
 
 # correlation_matrix = df.corr()
 
