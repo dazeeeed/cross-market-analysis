@@ -1,9 +1,10 @@
 import utilities
 import os
 import numpy as np
-import json
 import pandas as pd
-from tqdm import tqdm
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
+from scipy.signal import correlate
 
 ### THEORETICAL SOURCES
 # Cross correlation on images: 6.56 min
@@ -16,13 +17,31 @@ from tqdm import tqdm
 # https://emineter.files.wordpress.com/2020/04/hecht-optics-5ed.pdf
 
 ### PARAMETERS
-# ???
+products = ["btc", "eth"]
+col_to_plot = "ask_price_min"
 ###
 
 data_path = utilities.get_data_path(tree_level=2)
-basename_btc = f"btc"
-basename_eth = f"eth"
+filenames = {}
+dataframes = {}
+scalers = {}
 
-filename_btc = os.path.join(data_path, "datasets", f"{basename_btc}_stats_aligned.csv")
-filename_eth = os.path.join(data_path, "datasets", f"{basename_eth}_stats_aligned.csv")
+fig, ax = plt.subplots()
 
+for product in products:
+    filenames[product] = os.path.join(data_path, "datasets", f"{product}_stats_aligned.csv")
+    dataframes[product] = pd.read_csv(filenames[product], index_col=0)
+
+    # Normalize
+    scalers[product] = MinMaxScaler()
+    dataframes[product] = pd.DataFrame(scalers[product].fit_transform(dataframes[product]),
+                                       columns=dataframes[product].columns,
+                                       index=dataframes[product].index)
+    
+    time = dataframes[product].index
+    # ax.plot(time, dataframes[product][col_to_plot])
+
+crosscorr = correlate(dataframes[products[0]][col_to_plot], dataframes[products[1]][col_to_plot])
+print(len(crosscorr))
+
+# plt.show()
