@@ -23,3 +23,31 @@ def running_mean(x, N):
         b = min(dim_len, b)
         out[i] = np.mean(x[a:b])
     return out
+
+
+class Orderbook:
+	def __init__(self):
+		self.asks = {} # Sell 
+		self.bids = {} # Buy
+
+	def update_order_book(self, change):
+		order_type, price, amount = change
+		order_dict = self.bids if order_type == 'buy' else self.asks
+
+		# if price in order_dict:
+		# 	if amount == '0.00000000':
+		# 		order_dict.pop(price)
+		# 		print("Removing: ", price)
+		# 	else:
+		# 		order_dict[price] = amount
+		# 		print("Updating: ", price)
+		# else:
+		# 	order_dict[price] = amount
+		# 	print("Adding: ", price)
+
+		if amount == '0.00000000':
+			rc = order_dict.pop(price, None)
+			# print("Removing: ", price, ("NOT FOUND" if rc == None else "OK"))
+		else:
+			order_dict[price] = amount
+			# print("Adding/Updating: ", price)
