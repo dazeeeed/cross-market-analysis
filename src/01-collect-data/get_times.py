@@ -69,5 +69,7 @@ if draw_chart:
 		ax.plot([0, diffs_btc.shape[0]], [median_btc for _ in range(2)])
 		ax.plot([0, diffs_eth.shape[0]], [median_eth for _ in range(2)])
 
+	plt.xlabel('Czas [s]')
+	# plt.ylabel('')
 	plt.legend()
 	plt.show()

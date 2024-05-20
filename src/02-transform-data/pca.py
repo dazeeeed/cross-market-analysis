@@ -7,13 +7,13 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
 data_path = utilities.get_data_path(tree_level=2)
-filename = os.path.join(data_path, "datasets", "btc_stats.parquet")
+filename = os.path.join(data_path, "datasets", "btc_times_transformed.csv")
 
 # TODO: REMOVE LIMIT LATER!
-df = pd.read_parquet(filename)[:1000]
+df = pd.read_csv(filename, index_col='time')
 
 # # Choose features for analysis
-features = list(df.columns)
+features = list(df.columns) 
 
 # Standardize features before applying PCA
 scaler = StandardScaler()
@@ -27,7 +27,7 @@ pca_data = pca.fit_transform(scaled_data)
 explained_variance = pca.explained_variance_ratio_
 
 # Plot explained variance ratio
-fig, ax = plt.subplots(figsize=(8, 6))
+fig, ax = plt.subplots(figsize=(6, 4))
 
 ax.bar(range(1, len(features) + 1),
         explained_variance * 100,
@@ -57,9 +57,9 @@ ax.grid(which='both')
 # Or if you want different settings for the grids:
 ax.grid(which='minor', alpha=0.2)
 ax.grid(which='major', alpha=0.5)
-plt.xlabel("Principal Components")
-plt.ylabel("Explained Variance (%)")
-plt.title("Explained Variance Ratio")
+plt.xlabel("Składowe główne")
+plt.ylabel("Wariancja wyjaśniona (%)")
+# plt.title("Explained Variance Ratio")
 
 plt.show()
 

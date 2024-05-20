@@ -7,7 +7,7 @@ import numpy as np
 
 ### PARAMETERS
 draw_chart = True
-draw_moving_avg = False
+draw_moving_avg = True
 draw_median = True
 ###
 
@@ -33,13 +33,16 @@ if draw_chart:
 	diffs = np.array(diffs)
 
 	if draw_moving_avg:
-		diff_mov_avg = utilities.running_mean(diffs, 7)
+		diff_mov_avg = utilities.running_mean(diffs, 10)
 		ax.plot(diff_mov_avg)
 	else:
 		ax.plot(diffs)
 	
 	if draw_median:
 		median = np.median(diffs)
-		ax.plot([0, diffs.shape[0]], [median for _ in range(2)])
+		ax.plot([0, diffs.shape[0]], [median for _ in range(2)], label="Mediana")
 
+	plt.xlabel('Numer wiadomości')
+	plt.ylabel('Opóźnienie [ms]')
+	plt.legend()
 	plt.show()

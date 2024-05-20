@@ -120,9 +120,8 @@ with open(filename) as file:
 	
 		stats = update_stats(ob, stats)
 
-		# TODO: REMOVE THIS LATER!
-		if i == 1000:
-			break
+		# if i == 1000:
+			# break
 
 df_times = pd.DataFrame({'time': data_times})
 
@@ -176,5 +175,5 @@ df_combined = pd.concat([df_times, df_stats], axis=1)
 # Save to parquet
 # df_times.to_parquet(os.path.join(data_path, 'datasets', 'btc_times.parquet'))
 # df_stats.to_parquet(os.path.join(data_path, 'datasets', 'btc_stats.parquet'))
-df_combined.to_parquet(os.path.join(data_path, 'datasets', f'{product}_stats.parquet'))
+# df_combined.to_parquet(os.path.join(data_path, 'datasets', f'{product}_stats.parquet'))
 df_combined.to_csv(os.path.join(data_path, "datasets", f"{product}_stats.csv"), index=False)
